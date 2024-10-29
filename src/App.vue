@@ -1,47 +1,57 @@
-<script setup>
+<script setup >
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import {} from 'vant'
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="chatInput" :style="{
+      bottom:  '80px',
+      borderBottom: '1px solid #fff'
+    }">
+      <div class="inputs">
+        <van-field v-model="chatFieldText"
+          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading" />
+        <van-button class="sendButton" size="small" type="warning"
+          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading">
+          <van-icon name="arrow" size="20px" />
+        </van-button>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<style scoped lang="less">
+  .chatInput {
+    border-bottom: 1px solid #fff;
+    background-color: red;
+    position: fixed;
+    z-index: 2017;
+    width: 100%;
+    left: 0;
+    border-radius: 15px 15px 0 0;
+    transition: bottom 0.3s ease;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+    .inputs {
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+      background-color: #fff;
+      padding: 5px;
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+      .sendButton {
+        margin-right: 10px;
+      }
+
+      :deep(.van-field) {
+        background-color: #fff;
+        margin-bottom: 0;
+
+        .van-field__control {
+          color: #000
+        }
+      }
+    }
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
