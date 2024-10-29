@@ -24,13 +24,12 @@ import {} from 'vant'
 <style scoped lang="less">
   .chatInput {
     border-bottom: 1px solid #fff;
-    background-color: red;
-    position: absolute;
-    z-index: 2017;
+    background-color: blue;
     width: 100%;
     left: 0;
     border-radius: 15px 15px 0 0;
     transition: bottom 0.3s ease;
+    margin-top: 80vh;
 
     .inputs {
       margin: 10px;
