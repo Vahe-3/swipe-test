@@ -1,4 +1,4 @@
-import './assets/main.css'
+import './assets/main.less'
 import 'vant/lib/index.css';
 import { createApp } from 'vue'
 import App from './App.vue'

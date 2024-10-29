@@ -1,12 +1,27 @@
 <script setup >
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
+onMounted(() => {
+  this._viewportResizeTimeout = setTimeout(() => {
+          if (this._isIphone()) {
+            const height = window.Telegram.WebApp.viewportStableHeight;
+            const margin = this._initialViewportStableHeight - height;
+            const popups = Array.from(document.getElementsByClassName('van-popup--bottom'));
+            popups.forEach(p => {
+              p.style.paddingTop = margin + 'px';
+              p.style.bottom = margin + 'px';
+            });
+          }
+          window.scrollTo(document.documentElement);
+        }, 800);
+})
 
 </script>
 
 <template>
+  <div class="container">
   <div style="height: 8000px;">hello</div>
     <div class="chatInput" :style="{
       bottom:  '80px',
@@ -21,6 +36,7 @@ import { ref } from 'vue';
         </van-button>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped lang="less">
