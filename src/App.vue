@@ -11,7 +11,7 @@ import TheWelcome from './components/TheWelcome.vue'
       borderBottom: '1px solid #fff'
     }">
       <div class="inputs">
-        <van-field v-model="chatFieldText"
+        <van-field :autofocus="true" v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading" />
         <van-button class="sendButton" size="small" type="warning"
           :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading">
