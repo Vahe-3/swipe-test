@@ -25,7 +25,7 @@ import {} from 'vant'
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: red;
-    position: fixed;
+    position: absolute;
     z-index: 2017;
     width: 100%;
     left: 0;
