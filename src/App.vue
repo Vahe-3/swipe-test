@@ -27,7 +27,7 @@ import { ref } from 'vue';
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: red;
-    position: fixed;
+    position: sticky;
     z-index: 2017;
     width: 100%;
     left: 0;
