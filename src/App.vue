@@ -7,7 +7,6 @@ const isChatOpenLoading = ref(false); // Assuming this is already defined or pas
 const activeChat = ref({ id: null }); // Assuming active chat ID
 const bottomOffset = ref('80px');
 
-// Function to detect if the keyboard is open by checking window.innerHeight changes
 const adjustForKeyboard = () => {
   if (window.innerHeight < 600) { // Adjust threshold for your specific use case
     bottomOffset.value = '300px'; // Set the bottom offset when keyboard opens
@@ -35,7 +34,10 @@ onBeforeUnmount(() => {
         <van-icon name="arrow" size="20px" />
       </van-button>
     </div>
+    <input />
   </div>
+
+  
 </template>
 
 <style scoped lang="less">
