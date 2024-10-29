@@ -1,17 +1,19 @@
 <script setup >
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue';
+
 
 </script>
 
 <template>
-  <div style="height: 80vh;">hello</div>
+  <div style="height: 8000px;">hello</div>
     <div class="chatInput" :style="{
       bottom:  '80px',
       borderBottom: '1px solid #fff'
     }">
       <div class="inputs">
-        <van-field :autofocus="true" v-model="chatFieldText"
+        <van-field ref="" v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading" />
         <van-button class="sendButton" size="small" type="warning"
           :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading">
@@ -25,6 +27,10 @@ import TheWelcome from './components/TheWelcome.vue'
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: red;
+    position: fixed;
+    z-index: 2017;
+    width: 100%;
+    left: 0;
     border-radius: 15px 15px 0 0;
     transition: bottom 0.3s ease;
 
