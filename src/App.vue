@@ -1,13 +1,15 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue';
 import TheWelcome from './components/TheWelcome.vue';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const chatFieldText = ref('');
 const isShowChat = ref(false); // adjust as per your show condition
 const marginBottom = ref(0);
 
 function adjustMarginForKeyboard() {
+  console.log("OK");
+  
   const height = window.Telegram.WebApp.viewportStableHeight;
   const margin = this._initialViewportStableHeight - height;
   marginBottom.value = margin;
@@ -28,10 +30,11 @@ onMounted(() => {
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
+          ref=""
           v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
           @focus="adjustMarginForKeyboard"
-          @blur="marginBottom = 0" 
+          @blur="marginBottom = 0"
         />
         <van-button
           class="sendButton"
