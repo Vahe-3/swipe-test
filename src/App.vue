@@ -1,27 +1,45 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue';
-import TheWelcome from './components/TheWelcome.vue';
 import { onMounted, ref } from 'vue';
 
 const chatFieldText = ref('');
-const isShowChat = ref(false); // adjust as per your show condition
+const isShowChat = ref(false);
 const marginBottom = ref(0);
+const initialViewportHeight = ref(window.Telegram.WebApp.viewportStableHeight);
+const lastViewportHeight = ref(initialViewportHeight.value);
+let viewportResizeTimeout = null;
 
+// Function to adjust margin based on keyboard visibility
 function adjustMarginForKeyboard() {
-  console.log("OK");
-  
-  const height = window.Telegram.WebApp.viewportStableHeight;
-  const margin = this._initialViewportStableHeight - height;
-  marginBottom.value = margin;
+  const currentHeight = window.Telegram.WebApp.viewportStableHeight;
+  const margin = initialViewportHeight.value - currentHeight;
+  marginBottom.value = margin > 0 ? margin : 0;
 }
 
+function isIphone() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+// Listen for viewport changes to handle keyboard display adjustments
 onMounted(() => {
-  this._viewportResizeTimeout = setTimeout(() => {
-    if (this._isIphone()) {
-      adjustMarginForKeyboard();
+  window.Telegram.WebApp.onEvent('viewportChanged', ({ isStateStable }) => {
+    if (!isStateStable || lastViewportHeight.value === window.Telegram.WebApp.viewportStableHeight) {
+      return;
     }
-  }, 800);
+
+    lastViewportHeight.value = window.Telegram.WebApp.viewportStableHeight;
+
+    if (viewportResizeTimeout) {
+      clearTimeout(viewportResizeTimeout);
+    }
+
+    viewportResizeTimeout = setTimeout(() => {
+      if (isIphone()) {
+        adjustMarginForKeyboard();
+      }
+    }, 800);
+  });
 });
+
 </script>
 
 <template>
@@ -30,7 +48,6 @@ onMounted(() => {
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
-          ref=""
           v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
           @focus="adjustMarginForKeyboard"
