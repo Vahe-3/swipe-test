@@ -2,6 +2,26 @@
   <div class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Byeeeee</div>
     <h2 style="position: fixed; top: 20px;">Screen:{{ screenY }}</h2> 
+    <div class="chatInput2" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
+      <div class="inputs">
+        <van-field
+          v-model="chatFieldText"
+          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
+          @focus="adjustMarginForKeyboard"
+          @blur="marginBottom = 0"
+          ref="chatField"
+        />
+        <van-button
+          class="sendButton"
+          size="small"
+          type="warning"
+          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
+        >
+          <van-icon name="arrow" size="20px" />
+        </van-button>
+
+      </div>
+    </div>
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
@@ -19,6 +39,7 @@
         >
           <van-icon name="arrow" size="20px" />
         </van-button>
+
       </div>
     </div>
   </div>
@@ -102,6 +123,36 @@ onUnmounted(() => {
     z-index: 2017;
     width: 100%;
     left: 0;
+    border-radius: 15px 15px 0 0;
+    transition: bottom 0.3s ease, margin-bottom 0.3s ease;
+
+    .inputs {
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+      background-color: #fff;
+      padding: 5px;
+
+      .sendButton {
+        margin-right: 10px;
+      }
+
+      :deep(.van-field) {
+        background-color: #fff;
+        margin-bottom: 0;
+
+        .van-field__control {
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .chatInput2 {
+    border-bottom: 1px solid #fff;
+    background-color: red;
+    width: 100%;
     border-radius: 15px 15px 0 0;
     transition: bottom 0.3s ease, margin-bottom 0.3s ease;
 
