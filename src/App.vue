@@ -1,7 +1,7 @@
 <template>
   <div class="container" @touchstart="closeKeyboard">
-    <div style="height: 8000px;">Bye</div>
-    <h2>{{ scroll }}</h2>
+    <div style="height: 8000px;">Byeeeee</div>
+    <h2 style="position: fixed; top: 20px;">Screen:{{ screenY }}</h2> 
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 const chatFieldText = ref('');
 const isShowChat = ref(false);
@@ -35,7 +35,7 @@ const lastViewportHeight = ref(initialViewportHeight.value);
 let viewportResizeTimeout = null;
 const chatField = ref(null); // Reference for the chat input field
 
-const scroll = ref(null);
+const screenY = ref(window.screenY); // Initialize screenY value
 
 // Function to adjust margin based on keyboard visibility
 function adjustMarginForKeyboard() {
@@ -76,21 +76,23 @@ onMounted(() => {
     }, 800);
   });
 
-  // New resize listener to reset scroll position
-  window.addEventListener('resize', () => {
-    alert( window.screenY)
-    window.scrollTo(0, 0); // Set scroll position to top
+  // Update screenY on scroll
+  window.addEventListener('scroll', () => {
+    screenY.value = window.scrollY;
   });
 
   setTimeout(() => {
-    window.scrollTo(100, 100)
-  }, 2000)
+    window.scrollTo(100, 100);
+  }, 2000);
 });
 
-// Clean up event listener when component is unmount
-
+// Clean up event listener when component is unmounted
+onUnmounted(() => {
+  window.removeEventListener('scroll', () => {
+    screenY.value = window.scrollY;
+  });
+});
 </script>
-
 
 <style scoped lang="less">
   .chatInput {
