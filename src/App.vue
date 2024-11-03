@@ -1,27 +1,14 @@
 <template>
   <div class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Byeeeee</div>
-    <h2 style="position: fixed; top: 20px;">Screen:{{ screenY }}</h2> 
-    <div class="chatInput2" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
-      <div class="inputs">
-        <van-field
+    <van-field
           v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
           @focus="adjustMarginForKeyboard"
           @blur="marginBottom = 0"
-          ref="chatField"
+          ref="chatField2"
         />
-        <van-button
-          class="sendButton"
-          size="small"
-          type="warning"
-          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-        >
-          <van-icon name="arrow" size="20px" />
-        </van-button>
-
-      </div>
-    </div>
+    <h2 style="position: fixed; top: 20px;">Screen:{{ screenY }}</h2> 
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
@@ -55,7 +42,7 @@ const initialViewportHeight = ref(window.Telegram.WebApp.viewportStableHeight);
 const lastViewportHeight = ref(initialViewportHeight.value);
 let viewportResizeTimeout = null;
 const chatField = ref(null); // Reference for the chat input field
-
+const chatField2 = ref(null)
 const screenY = ref(window.screenY); // Initialize screenY value
 
 // Function to adjust margin based on keyboard visibility
@@ -72,6 +59,7 @@ function isIphone() {
 // Function to close the keyboard
 function closeKeyboard(event) {
   if (event.target !== chatField.value?.$el) {
+    chatField2.value?.blur();
     chatField.value?.blur(); // Blurs the input, closing the keyboard
   }
 }
@@ -149,33 +137,4 @@ onUnmounted(() => {
     }
   }
 
-  .chatInput2 {
-    border-bottom: 1px solid #fff;
-    background-color: red;
-    width: 100%;
-    border-radius: 15px 15px 0 0;
-    transition: bottom 0.3s ease, margin-bottom 0.3s ease;
-
-    .inputs {
-      margin: 10px;
-      display: flex;
-      align-items: center;
-      border-radius: 5px;
-      background-color: #fff;
-      padding: 5px;
-
-      .sendButton {
-        margin-right: 10px;
-      }
-
-      :deep(.van-field) {
-        background-color: #fff;
-        margin-bottom: 0;
-
-        .van-field__control {
-          color: #000;
-        }
-      }
-    }
-  }
 </style>
