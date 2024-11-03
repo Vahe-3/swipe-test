@@ -1,6 +1,7 @@
 <template>
   <div class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Bye</div>
+    <h2>{{ scroll }}</h2>
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
@@ -34,6 +35,8 @@ const lastViewportHeight = ref(initialViewportHeight.value);
 let viewportResizeTimeout = null;
 const chatField = ref(null); // Reference for the chat input field
 
+const scroll = ref(null);
+
 // Function to adjust margin based on keyboard visibility
 function adjustMarginForKeyboard() {
   const currentHeight = window.Telegram.WebApp.viewportStableHeight;
@@ -54,6 +57,7 @@ function closeKeyboard(event) {
 
 // Listen for viewport changes to handle keyboard display adjustments
 onMounted(() => {
+  // Existing viewport change listener
   window.Telegram.WebApp.onEvent('viewportChanged', ({ isStateStable }) => {
     if (!isStateStable || lastViewportHeight.value === window.Telegram.WebApp.viewportStableHeight) {
       return;
@@ -71,7 +75,20 @@ onMounted(() => {
       }
     }, 800);
   });
+
+  // New resize listener to reset scroll position
+  window.addEventListener('resize', () => {
+    alert( window.screenY)
+    window.scrollTo(0, 0); // Set scroll position to top
+  });
+
+  setTimeout(() => {
+    window.scrollTo(100, 100)
+  }, 2000)
 });
+
+// Clean up event listener when component is unmount
+
 </script>
 
 
