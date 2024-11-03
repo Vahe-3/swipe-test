@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <div style="height: 8000px;">hello</div>
+    <div style="height: 8000px;">Bye</div>
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
