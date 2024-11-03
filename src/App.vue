@@ -1,3 +1,28 @@
+<template>
+  <div class="container" @touchstart="closeKeyboard">
+    <div style="height: 8000px;">Bye</div>
+    <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
+      <div class="inputs">
+        <van-field
+          v-model="chatFieldText"
+          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
+          @focus="adjustMarginForKeyboard"
+          @blur="marginBottom = 0"
+          ref="chatField"
+        />
+        <van-button
+          class="sendButton"
+          size="small"
+          type="warning"
+          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
+        >
+          <van-icon name="arrow" size="20px" />
+        </van-button>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { onMounted, ref } from 'vue';
 
@@ -7,6 +32,7 @@ const marginBottom = ref(0);
 const initialViewportHeight = ref(window.Telegram.WebApp.viewportStableHeight);
 const lastViewportHeight = ref(initialViewportHeight.value);
 let viewportResizeTimeout = null;
+const chatField = ref(null); // Reference for the chat input field
 
 // Function to adjust margin based on keyboard visibility
 function adjustMarginForKeyboard() {
@@ -17,6 +43,13 @@ function adjustMarginForKeyboard() {
 
 function isIphone() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+// Function to close the keyboard
+function closeKeyboard(event) {
+  if (event.target !== chatField.value?.$el) {
+    chatField.value?.blur(); // Blurs the input, closing the keyboard
+  }
 }
 
 // Listen for viewport changes to handle keyboard display adjustments
@@ -39,32 +72,8 @@ onMounted(() => {
     }, 800);
   });
 });
-
 </script>
 
-<template>
-  <div class="container">
-    <div style="height: 8000px;">Bye</div>
-    <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
-      <div class="inputs">
-        <van-field
-          v-model="chatFieldText"
-          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-          @focus="adjustMarginForKeyboard"
-          @blur="marginBottom = 0"
-        />
-        <van-button
-          class="sendButton"
-          size="small"
-          type="warning"
-          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-        >
-          <van-icon name="arrow" size="20px" />
-        </van-button>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped lang="less">
   .chatInput {
