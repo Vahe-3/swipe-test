@@ -5,7 +5,9 @@ import App from './App.vue'
 import Vant from 'vant';
 
 window.Telegram.WebApp.disableVerticalSwipes();
-// window.Telegram.WebApp.addToHomeScreen();
+alert(window.Telegram.WebApp.version);
+
+
 
 createApp(App).use(Vant).mount('#app');
 
