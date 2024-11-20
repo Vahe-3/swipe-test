@@ -1,6 +1,6 @@
 <template>
   <div class="container" @touchstart="closeKeyboard">
-    <div style="height: 8000px;">Byeeeee</div>
+    <div style="height: 8000px;">Helloooooo</div>
     <van-field
           v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
