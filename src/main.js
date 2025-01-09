@@ -6,7 +6,7 @@ import Vant from 'vant';
 
 window.Telegram.WebApp.disableVerticalSwipes();
 const expandMessage = JSON.stringify({
-    eventType: 'web_app_expand',
+    eventType: 'web_app_request_fullscreen',
     eventData: {},
   });
   
