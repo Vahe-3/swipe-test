@@ -1,5 +1,5 @@
 <template>
-  <div  style="padding-top: 50px;" class="container" @touchstart="closeKeyboard">
+  <div  style="padding-top: 60px;" class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Helloooooo</div>
     <van-field
           v-model="chatFieldText"
@@ -8,7 +8,7 @@
           @blur="marginBottom = 0"
           ref="chatField2"
         />
-    <h2 style="position: fixed; top: 20px;">Screen:{{ screenY }}</h2> 
+
     <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
