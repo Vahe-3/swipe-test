@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @touchstart="closeKeyboard">
+  <div  style="padding-top: 50px;" class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Helloooooo</div>
     <van-field
           v-model="chatFieldText"
