@@ -19,7 +19,10 @@ function notifyAppReady() {
 // Request full-screen mode
 function requestFullScreen() {
     
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.version > 6.0) {
+    if (window.Telegram && window.Telegram.WebApp) {
+
+        alert(window.Telegram.WebApp.version > 6.0);
+        
         try {            
             window.Telegram.WebApp.requestFullscreen((event) => {
                 alert(event)
@@ -31,9 +34,9 @@ function requestFullScreen() {
 }
 
 
-window.Telegram.WebApp.fullscreenChanged(event => {
-    alert(event)
-}) 
+// window.Telegram.WebApp.fullscreenChanged(event => {
+//     alert(event)
+// }) 
 
 
 requestFullScreen();
