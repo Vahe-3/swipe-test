@@ -108,7 +108,7 @@ onUnmounted(() => {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 100px;
+  // padding-top: 100px;
 }
   .chatInput {
     border-bottom: 1px solid #fff;
