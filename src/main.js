@@ -5,14 +5,13 @@ import App from './App.vue'
 import Vant from 'vant';
 
 window.Telegram.WebApp.disableVerticalSwipes();
-const data = JSON.stringify({
-    eventType: 'web_app_setup_back_button',
-    eventData: {
-      is_visible: false,
-    },
+const expandMessage = JSON.stringify({
+    eventType: 'web_app_expand',
+    eventData: {},
   });
   
-  window.parent.postMessage(data, 'https://web.telegram.org');
+  window.parent.postMessage(expandMessage, 'https://web.telegram.org');
+  
 
 // Check if the Telegram WebApp supports the addToHomeScreen method
 // if (Telegram.WebApp.isExpanded && Telegram.WebApp.canAddToHomeScreen) {
