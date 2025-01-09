@@ -5,7 +5,16 @@ import App from './App.vue'
 import Vant from 'vant';
 
 window.Telegram.WebApp.disableVerticalSwipes();
-const expandMessage = JSON.stringify({
+// Notify Telegram that the app is ready
+const readyMessage = JSON.stringify({
+    eventType: 'web_app_ready',
+    eventData: {},
+  });
+  
+  window.parent.postMessage(readyMessage, 'https://web.telegram.org');
+  
+  // Request fullscreen mode
+  const expandMessage = JSON.stringify({
     eventType: 'web_app_request_fullscreen',
     eventData: {},
   });

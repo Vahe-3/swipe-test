@@ -106,7 +106,7 @@ onUnmounted(() => {
 <style scoped lang="less">
   .chatInput {
     border-bottom: 1px solid #fff;
-    background-color: blue;
+    background-color: rgb(134, 85, 124);
     position: fixed;
     z-index: 2017;
     width: 100%;
