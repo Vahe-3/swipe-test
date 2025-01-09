@@ -6,7 +6,11 @@ import Vant from 'vant';
 
 // Disable vertical swipes in Telegram Web App
 window.Telegram.WebApp.disableVerticalSwipes();
-window.Telegram.WebApp.requestFullscreen();
+
+if(window.Telegram.WebApp?.requestFullscreen) {
+    window.Telegram.WebApp.requestFullscreen();
+}
+
 
 // Create the Vue application
 createApp(App).use(Vant).mount('#app');
