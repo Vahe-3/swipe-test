@@ -5,21 +5,36 @@ import App from './App.vue'
 import Vant from 'vant';
 
 window.Telegram.WebApp.disableVerticalSwipes();
-// Notify Telegram that the app is ready
-const readyMessage = JSON.stringify({
-    eventType: 'web_app_ready',
-    eventData: {},
+// Function to notify Telegram that the Mini App is ready
+function notifyAppReady() {
+    const readyMessage = JSON.stringify({
+      eventType: 'web_app_ready',
+      eventData: {},
+    });
+  
+    if (window.parent) {
+      window.parent.postMessage(readyMessage, 'https://web.telegram.org'); // Notify Telegram Web
+    }
+  }
+  
+  // Function to request full-screen mode
+  function requestFullScreen() {
+    const expandMessage = JSON.stringify({
+      eventType: 'web_app_request_fullscreen', // Full-screen request event
+      eventData: {}, // No additional data required
+    });
+  
+    if (window.parent) {
+      window.parent.postMessage(expandMessage, 'https://web.telegram.org'); // Send request to Telegram Web
+    }
+  }
+  
+  // Call when the Mini App is loaded
+  window.addEventListener('load', () => {
+    notifyAppReady(); // Notify that the app is ready
+    requestFullScreen(); // Request full-screen mode
   });
   
-  window.parent.postMessage(readyMessage, 'https://web.telegram.org');
-  
-  // Request fullscreen mode
-  const expandMessage = JSON.stringify({
-    eventType: 'web_app_request_fullscreen',
-    eventData: {},
-  });
-  
-  window.parent.postMessage(expandMessage, 'https://web.telegram.org');
   
 
 // Check if the Telegram WebApp supports the addToHomeScreen method
