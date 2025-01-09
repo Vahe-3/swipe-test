@@ -31,11 +31,14 @@ function requestFullScreen() {
 }
 
 
+window.Telegram.WebApp.fullscreenChanged(event => {
+    alert(event)
+}) 
+
 
 requestFullScreen();
 
 
-alert(window.Telegram.WebApp.isFullscreen);
 
 
 // Create the Vue application
