@@ -21,7 +21,9 @@ function requestFullScreen() {
     
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.version > 6.0) {
         try {            
-            window.Telegram.WebApp.requestFullscreen();
+            window.Telegram.WebApp.requestFullscreen((event) => {
+                alert(event.activated)
+            });
         } catch (error) {
             console.error("An error occurred while requesting full-screen mode:", error.message);
         }
