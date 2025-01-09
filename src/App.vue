@@ -1,5 +1,5 @@
 <template>
-  <div  style="padding-top: 60px;" class="container" @touchstart="closeKeyboard">
+  <div  class="container" @touchstart="closeKeyboard">
     <div style="height: 8000px;">Helloooooo</div>
     <van-field
           v-model="chatFieldText"
@@ -104,6 +104,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
+
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 100px;
+}
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: blue;
