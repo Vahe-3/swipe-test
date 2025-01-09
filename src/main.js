@@ -19,18 +19,27 @@ function notifyAppReady() {
 // Request full-screen mode
 function requestFullScreen() {
     
-    if (window.Telegram && window.Telegram.WebApp) {
-
-        alert(window.Telegram.WebApp.version > 6.0);
-        
+    if (window.Telegram && window.Telegram.WebApp) {        
         try {            
-            window.Telegram.WebApp.requestFullscreen((event) => {
-                alert(event)
-            });
+            window.Telegram.WebApp.requestFullscreen();
         } catch (error) {
             console.error("An error occurred while requesting full-screen mode:", error.message);
         }
     } 
+}
+
+if (navigator.userAgent.includes('iPhone')) {
+    const style = document.createElement('style');
+    style.textContent = `
+            html {
+                padding-top: 10vh !important;
+            }
+            [class*="van-popup"] {
+                 padding-top: 10vh !important;
+            }
+        `;
+
+    document.head.appendChild(style);
 }
 
 

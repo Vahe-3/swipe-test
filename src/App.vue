@@ -112,7 +112,7 @@ onUnmounted(() => {
 }
   .chatInput {
     border-bottom: 1px solid #fff;
-    background-color: red;
+    background-color: green;
     position: fixed;
     z-index: 2017;
     width: 100%;
