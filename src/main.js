@@ -28,28 +28,12 @@ function requestFullScreen() {
     } 
 }
 
-if (window.Telegram && window.Telegram.WebApp) {
-    const viewportHeight = window.Telegram.WebApp.viewportHeight; // Current viewport height
-    const stableViewportHeight = window.Telegram.WebApp.viewportStableHeight; // Stable height without overlays
 
-    // Log for debugging
-    console.log(`Viewport Height: ${viewportHeight}`);
-    console.log(`Stable Viewport Height: ${stableViewportHeight}`);
 
-    // Adjust the main content height dynamically
-    const appContent = document.getElementById('app');
-    if (appContent) {
-      appContent.style.height = `${stableViewportHeight}px`;
-    }
-  } else {
-    console.error("Telegram WebApp API is not available.");
-  }
+requestFullScreen();
 
-// Call when the Mini App is loaded
-window.addEventListener('load', () => {
-    notifyAppReady(); // Notify that the app is ready
-    requestFullScreen(); // Request full-screen mode
-});
+
+alert(window.Telegram.WebApp.isFullscreen);
 
 
 // Create the Vue application
