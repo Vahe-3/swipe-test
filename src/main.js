@@ -24,16 +24,6 @@ function requestFullScreen() {
             window.Telegram.WebApp.requestFullscreen();
 
             
-            const adjustLayout = () => {
-                const height = window.innerHeight;
-                const width = window.innerWidth;
-                document.body.style.height = `${height}px`;
-                document.body.style.width = `${width}px`;
-            };
-        
-            // Call it initially and on window resize
-            adjustLayout();
-            window.addEventListener('resize', adjustLayout);
         } catch (error) {
             console.error("An error occurred while requesting full-screen mode:", error.message);
         }
@@ -41,10 +31,21 @@ function requestFullScreen() {
 }
 
 
-
-
-
 requestFullScreen();
+
+if (window.Telegram.WebApp?.version >= 8.0) {
+    // Attach the fullscreenChanged event listener
+    window.Telegram.WebApp.onEvent('fullscreenChanged', () => {
+        const isFullscreen = window.Telegram.WebApp.isFullscreen;
+
+        if (isFullscreen) {
+           alert('App entered fullscreen mode');
+        } else {
+            alert('App Not');
+        }
+    });
+
+}
 
 
 
