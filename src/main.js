@@ -41,9 +41,7 @@ function requestFullScreen() {
 }
 
 
-// window.Telegram.WebApp.fullscreenChanged(event => {
-//     alert(event)
-// }) 
+
 
 
 requestFullScreen();
