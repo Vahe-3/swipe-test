@@ -22,24 +22,22 @@ function requestFullScreen() {
     if (window.Telegram && window.Telegram.WebApp) {        
         try {            
             window.Telegram.WebApp.requestFullscreen();
+
+            
+            const adjustLayout = () => {
+                const height = window.innerHeight;
+                const width = window.innerWidth;
+                document.body.style.height = `${height}px`;
+                document.body.style.width = `${width}px`;
+            };
+        
+            // Call it initially and on window resize
+            adjustLayout();
+            window.addEventListener('resize', adjustLayout);
         } catch (error) {
             console.error("An error occurred while requesting full-screen mode:", error.message);
         }
     } 
-}
-
-if (navigator.userAgent.includes('iPhone')) {
-    const style = document.createElement('style');
-    style.textContent = `
-            html {
-                padding-top: 10vh !important;
-            }
-            [class*="van-popup"] {
-                 padding-top: 10vh !important;
-            }
-        `;
-
-    document.head.appendChild(style);
 }
 
 
