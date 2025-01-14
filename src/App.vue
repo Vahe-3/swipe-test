@@ -1,15 +1,16 @@
 <template>
   <div  class="container" @touchstart="closeKeyboard">
-    <div style="height: 8000px;">Helloooooo</div>
-    <van-field
+hello
+    <!-- <div class="hello">Helloooooo</div> -->
+    <!-- <van-field
           v-model="chatFieldText"
           :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
           @focus="adjustMarginForKeyboard"
           @blur="marginBottom = 0"
           ref="chatField2"
-        />
+        /> -->
 
-    <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
+    <!-- <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
       <div class="inputs">
         <van-field
           v-model="chatFieldText"
@@ -28,7 +29,7 @@
         </van-button>
 
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -105,10 +106,26 @@ onUnmounted(() => {
 
 <style scoped lang="less">
 
+.hello {
+
+}
+
 .container {
   padding-left: 20px;
   padding-right: 20px;
+  background-color: blue;
+  height: 80vh;
+
+  @media (orientation: landscape) {
+
+      margin-left: env(safe-area-inset-left, 20px);
+      margin-right: env(safe-area-inset-right, 20px);
+    }
+
 }
+
+
+
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: blue;

@@ -17,21 +17,21 @@ function notifyAppReady() {
 }
 
 // Request full-screen mode
-function requestFullScreen() {
+// function requestFullScreen() {
     
-    if (window.Telegram && window.Telegram.WebApp) {        
-        try {            
-            window.Telegram.WebApp.requestFullscreen();
+//     if (window.Telegram && window.Telegram.WebApp) {        
+//         try {            
+//             window.Telegram.WebApp.requestFullscreen();
 
             
-        } catch (error) {
-            console.error("An error occurred while requesting full-screen mode:", error.message);
-        }
-    } 
-}
+//         } catch (error) {
+//             console.error("An error occurred while requesting full-screen mode:", error.message);
+//         }
+//     } 
+// }
 
 
-requestFullScreen();
+// requestFullScreen();
 
 if (window.Telegram.WebApp?.version >= 8.0) {
     // Attach the fullscreenChanged event listener
