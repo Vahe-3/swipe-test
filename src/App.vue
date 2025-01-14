@@ -118,8 +118,8 @@ onUnmounted(() => {
 
   @media (orientation: landscape) {
 
-      margin-left: env(safe-area-inset-left, 20px);
-      margin-right: env(safe-area-inset-right, 20px);
+      margin-left: 30px;
+      margin-right: 30px;
     }
 
 }
