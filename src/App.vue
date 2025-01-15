@@ -66,23 +66,27 @@ function isIphone() {
 }
 
 function _toggleFullScreen(value) {  
+  if (window.Telegram.WebApp?.version > 6.0) {
+    isFullScreenMode.value = value;
+    
+    if (!fullscreenListener.value) {
+      fullscreenListener.value = () => {
+        const isFullscreen = window.Telegram.WebApp.isFullscreen;
+        if (isFullscreen) {
+          document.documentElement.classList.add('isFullScreen');
+        } else {
+          document.documentElement.classList.remove('isFullScreen');
+        }
+      };
+      window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener.value);
+    }
 
-if (window.Telegram.WebApp?.version > 6.0) {
-  isFullScreenMode.value = value  
-  if (!fullscreenListener.value) {
-    fullscreenListener.value = () => {
-      const isFullscreen = window.Telegram.WebApp.isFullscreen;
-      document.documentElement.classList.toggle('isFullScreen', isFullscreen);
-    };
-    window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener.value);
+    if (value) {
+      window.Telegram.WebApp.requestFullscreen();
+    } else {
+      window.Telegram.WebApp.exitFullscreen();
+    }
   }
-
-  if (value) {
-    window.Telegram.WebApp.requestFullscreen();
-  } else {
-    window.Telegram.WebApp.exitFullscreen();
-  }
-}
 }
 
 // Function to close the keyboard
