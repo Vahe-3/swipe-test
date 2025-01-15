@@ -72,6 +72,8 @@ function _toggleFullScreen(value) {
     if (!fullscreenListener.value) {
       fullscreenListener.value = () => {
         const isFullscreen = window.Telegram.WebApp.isFullscreen;
+        console.log(isFullscreen, 'isFullscreen');
+        
         if (isFullscreen) {
           document.documentElement.classList.add('isFullScreen');
         } else {
@@ -145,7 +147,7 @@ onUnmounted(() => {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: purple;
+  background-color: red;
   height: 80vh;
 
   .chatInput {
