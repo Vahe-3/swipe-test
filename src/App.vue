@@ -51,8 +51,9 @@ const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
 
 
-onMounted( () => {  
-  _toggleFullScreen(true)
+onMounted(() => {  
+  _toggleFullScreen(true);
+  _setVH();
 })
 
 function adjustMarginForKeyboard() {
@@ -87,6 +88,11 @@ function closeKeyboard(event) {
     chatField.value?.blur(); // Blurs the input, closing the keyboard
   }
 }
+
+function _setVH() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+          }
 
 // Listen for viewport changes to handle keyboard display adjustments
 // onMounted(() => {
