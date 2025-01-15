@@ -51,9 +51,7 @@ const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
 
 
-onMounted(async () => {
-  alert('Hello');
-  
+onMounted(async () => {  
   _toggleFullScreen(true)
 })
 
@@ -68,7 +66,7 @@ function isIphone() {
 }
 
 function _toggleFullScreen(value) {  
-  alert(window.Telegram.WebApp?.version)
+
 if (window.Telegram.WebApp?.version > 6.0) {
   isFullScreenMode.value = value  
   if (!fullscreenListener.value) {
