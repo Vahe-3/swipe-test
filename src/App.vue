@@ -35,7 +35,7 @@ hello
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, onBeforeMount } from 'vue';
 
 const chatFieldText = ref('');
 const isShowChat = ref(false);
@@ -51,7 +51,7 @@ const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
 
 
-onMounted(() => {
+onBeforeMount(() => {
   _toggleFullScreen(true)
 })
 
@@ -66,12 +66,9 @@ function isIphone() {
 }
 
 function _toggleFullScreen(value) {  
-  console.log(value);
-        
-  isFullScreenMode.value = value  
-  document.documentElement.classList.toggle('isFullScreen', value);
-if (window.Telegram.WebApp?.version > 6.0) {
 
+if (window.Telegram.WebApp?.version > 6.0) {
+  isFullScreenMode.value = value  
   if (!fullscreenListener) {
     fullscreenListener = () => {
       const isFullscreen = window.Telegram.WebApp.isFullscreen;
