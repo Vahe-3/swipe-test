@@ -49,7 +49,12 @@ const screenY = ref(window.screenY); // Initialize screenY value
 
 const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
-// Function to adjust margin based on keyboard visibility
+
+
+onMounted(() => {
+  _toggleFullScreen(true)
+})
+
 function adjustMarginForKeyboard() {
   const currentHeight = window.Telegram.WebApp.viewportStableHeight;
   const margin = initialViewportHeight.value - currentHeight;
@@ -60,15 +65,17 @@ function isIphone() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-function _toggleFullScreen(value) {          
-  isFullScreenMode.value = value
+function _toggleFullScreen(value) {  
+  console.log(value);
+        
+  isFullScreenMode.value = value  
   document.documentElement.classList.toggle('isFullScreen', value);
 if (window.Telegram.WebApp?.version > 6.0) {
 
   if (!fullscreenListener) {
     fullscreenListener = () => {
       const isFullscreen = window.Telegram.WebApp.isFullscreen;
-
+      document.documentElement.classList.toggle('isFullScreen', isFullscreen);
     };
     window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener);
   }
@@ -137,7 +144,7 @@ onUnmounted(() => {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: blue;
+  background-color: purple;
   height: 80vh;
 
   .chatInput {

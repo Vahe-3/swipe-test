@@ -33,19 +33,19 @@ function notifyAppReady() {
 
 // requestFullScreen();
 
-if (window.Telegram.WebApp?.version >= 8.0) {
-    // Attach the fullscreenChanged event listener
-    window.Telegram.WebApp.onEvent('fullscreenChanged', () => {
-        const isFullscreen = window.Telegram.WebApp.isFullscreen;
+// if (window.Telegram.WebApp?.version >= 8.0) {
+//     // Attach the fullscreenChanged event listener
+//     window.Telegram.WebApp.onEvent('fullscreenChanged', () => {
+//         const isFullscreen = window.Telegram.WebApp.isFullscreen;
 
-        if (isFullscreen) {
-           alert('App entered fullscreen mode');
-        } else {
-            alert('App Not');
-        }
-    });
+//         if (isFullscreen) {
+//            alert('App entered fullscreen mode');
+//         } else {
+//             alert('App Not');
+//         }
+//     });
 
-}
+// }
 
 
 
