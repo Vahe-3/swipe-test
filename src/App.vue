@@ -68,7 +68,7 @@ function isIphone() {
 }
 
 function _toggleFullScreen(value) {  
-
+  alert(window.Telegram.WebApp?.version)
 if (window.Telegram.WebApp?.version > 6.0) {
   isFullScreenMode.value = value  
   if (!fullscreenListener) {
@@ -96,35 +96,35 @@ function closeKeyboard(event) {
 }
 
 // Listen for viewport changes to handle keyboard display adjustments
-onMounted(() => {
-  // Existing viewport change listener
-  window.Telegram.WebApp.onEvent('viewportChanged', ({ isStateStable }) => {
-    if (!isStateStable || lastViewportHeight.value === window.Telegram.WebApp.viewportStableHeight) {
-      return;
-    }
+// onMounted(() => {
+//   // Existing viewport change listener
+//   window.Telegram.WebApp.onEvent('viewportChanged', ({ isStateStable }) => {
+//     if (!isStateStable || lastViewportHeight.value === window.Telegram.WebApp.viewportStableHeight) {
+//       return;
+//     }
 
-    lastViewportHeight.value = window.Telegram.WebApp.viewportStableHeight;
+//     lastViewportHeight.value = window.Telegram.WebApp.viewportStableHeight;
 
-    if (viewportResizeTimeout) {
-      clearTimeout(viewportResizeTimeout);
-    }
+//     if (viewportResizeTimeout) {
+//       clearTimeout(viewportResizeTimeout);
+//     }
 
-    viewportResizeTimeout = setTimeout(() => {
-      if (isIphone()) {
-        adjustMarginForKeyboard();
-      }
-    }, 800);
-  });
+//     viewportResizeTimeout = setTimeout(() => {
+//       if (isIphone()) {
+//         adjustMarginForKeyboard();
+//       }
+//     }, 800);
+//   });
 
-  // Update screenY on scroll
-  window.addEventListener('scroll', () => {
-    screenY.value = window.scrollY;
-  });
+//   // Update screenY on scroll
+//   window.addEventListener('scroll', () => {
+//     screenY.value = window.scrollY;
+//   });
 
-  setTimeout(() => {
-    window.scrollTo(100, 100);
-  }, 2000);
-});
+//   setTimeout(() => {
+//     window.scrollTo(100, 100);
+//   }, 2000);
+// });
 
 // Clean up event listener when component is unmounted
 onUnmounted(() => {
