@@ -1,6 +1,7 @@
 <template>
   <div  class="container" @touchstart="closeKeyboard">
 hello
+<button style="display: block;" @click="_toggleFullScreen(!isFullScreenMode)">Change mode</button>
     <!-- <div class="hello">Helloooooo</div> -->
     <!-- <van-field
           v-model="chatFieldText"
@@ -46,6 +47,8 @@ const chatField = ref(null); // Reference for the chat input field
 const chatField2 = ref(null)
 const screenY = ref(window.screenY); // Initialize screenY value
 
+const isFullScreenMode = ref(false);
+const fullscreenListener = ref(null)
 // Function to adjust margin based on keyboard visibility
 function adjustMarginForKeyboard() {
   const currentHeight = window.Telegram.WebApp.viewportStableHeight;
@@ -55,6 +58,26 @@ function adjustMarginForKeyboard() {
 
 function isIphone() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+function _toggleFullScreen(value) {          
+
+if (window.Telegram.WebApp?.version > 6.0) {
+  isFullScreenMode.value = value
+  if (!fullscreenListener) {
+    fullscreenListener = () => {
+      const isFullscreen = window.Telegram.WebApp.isFullscreen;
+      document.documentElement.classList.toggle('isFullScreen', isFullscreen);
+    };
+    window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener);
+  }
+
+  if (value) {
+    window.Telegram.WebApp.requestFullscreen();
+  } else {
+    window.Telegram.WebApp.exitFullscreen();
+  }
+}
 }
 
 // Function to close the keyboard
@@ -116,16 +139,6 @@ onUnmounted(() => {
   background-color: blue;
   height: 80vh;
 
-  @media (orientation: landscape) {
-
-      padding-left: 8vw;
-      padding-right: 8vw;
-    }
-
-}
-
-
-
   .chatInput {
     border-bottom: 1px solid #fff;
     background-color: blue;
@@ -157,6 +170,8 @@ onUnmounted(() => {
         }
       }
     }
+  }
+
   }
 
 </style>
