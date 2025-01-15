@@ -51,7 +51,9 @@ const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
 
 
-onBeforeMount(() => {
+onMounted(async () => {
+  alert('Hello');
+  
   _toggleFullScreen(true)
 })
 
