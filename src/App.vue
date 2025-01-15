@@ -71,12 +71,12 @@ function _toggleFullScreen(value) {
   alert(window.Telegram.WebApp?.version)
 if (window.Telegram.WebApp?.version > 6.0) {
   isFullScreenMode.value = value  
-  if (!fullscreenListener) {
-    fullscreenListener = () => {
+  if (!fullscreenListener.value) {
+    fullscreenListener.value = () => {
       const isFullscreen = window.Telegram.WebApp.isFullscreen;
       document.documentElement.classList.toggle('isFullScreen', isFullscreen);
     };
-    window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener);
+    window.Telegram.WebApp.onEvent('fullscreenChanged', fullscreenListener.value);
   }
 
   if (value) {
