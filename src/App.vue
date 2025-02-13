@@ -1,37 +1,11 @@
 <template>
-  <div  class="container" @touchstart="closeKeyboard">
-hello
-<button style="display: block;" @click="_toggleFullScreen(!isFullScreenMode)">Change mode</button>
-    <!-- <div class="hello">Helloooooo</div> -->
-    <!-- <van-field
-          v-model="chatFieldText"
-          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-          @focus="adjustMarginForKeyboard"
-          @blur="marginBottom = 0"
-          ref="chatField2"
-        /> -->
+  <div class="container" @touchstart="closeKeyboard">
+    hello
+    <button style="display: block;" @click="_toggleFullScreen(!isFullScreenMode)">Change mode</button>
 
-    <!-- <div class="chatInput" :style="{ bottom: isShowChat ? '0' : '80px', marginBottom: marginBottom + 'px' }">
-      <div class="inputs">
-        <van-field
-          v-model="chatFieldText"
-          :disabled="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-          @focus="adjustMarginForKeyboard"
-          @blur="marginBottom = 0"
-          ref="chatField"
-        />
-        <van-button
-          class="sendButton"
-          size="small"
-          type="warning"
-          :loading="isShowChat && _getIsChatInLoading(activeChat.id) || isChatOpenLoading"
-        >
-          <van-icon name="arrow" size="20px" />
-        </van-button>
-
-      </div>
-    </div> -->
   </div>
+
+  <button @click="_shareBtnClick">Share Links</button>
 </template>
 
 <script setup>
@@ -51,9 +25,10 @@ const isFullScreenMode = ref(false);
 const fullscreenListener = ref(null)
 
 
-onMounted(() => {  
+onMounted(() => {
   _toggleFullScreen(true);
   _setVH();
+  setSharedData()
 })
 
 function adjustMarginForKeyboard() {
@@ -66,10 +41,10 @@ function isIphone() {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-function _toggleFullScreen(value) {  
+function _toggleFullScreen(value) {
   if (window.Telegram.WebApp?.version > 6.0) {
-    
-  
+
+
     isFullScreenMode.value = value;
     if (value) {
       window.Telegram.WebApp.requestFullscreen();
@@ -90,9 +65,57 @@ function closeKeyboard(event) {
 }
 
 function _setVH() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-          }
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+function _shareBtnClick() {
+
+
+
+  const urlToShare = `https://t.me/feed_x_bot`;
+
+
+  const dataList = [
+    "@cdsdsvsd",
+    "Data item 2",
+    "Data item 3"
+  ];
+
+  // Format the data list into a single string.
+  // You can use any separator you prefer; here we use newline characters.
+  const listText = dataList.join('\n');
+
+  // Optionally, prepend a greeting or header.
+  const messageText = `${"Hello world!"}\n\n${listText}`;
+
+  // URL-encode both the URL and the text.
+  const encodedUrl = encodeURIComponent(urlToShare);
+  const encodedText = encodeURIComponent(messageText);
+
+  // Build the full Telegram share URL.
+  const shareLink = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
+
+  // Use Telegram WebApp's method to open the share link.
+  // Alternatively, you could simply set window.location.href = shareLink or open it in a new tab.
+  window.Telegram.WebApp.openTelegramLink(shareLink);
+}
+
+function setSharedData() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const sharedUserId = urlParams.get("sharedUserId");
+  const sharedUserName = urlParams.get("sharedUserName");
+
+  if (sharedUserId && sharedUserName) {
+    const sharedUser = {
+      userId: sharedUserId,
+      title: sharedUserName
+    };
+
+    alert(JSON.stringify(sharedUser))
+  }
+}
+
 
 // Listen for viewport changes to handle keyboard display adjustments
 // onMounted(() => {
@@ -134,15 +157,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-
-.hello {
-
-}
+.hello {}
 
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: red;
+  background-color: blue;
   height: 80vh;
 
   .chatInput {
@@ -178,6 +198,5 @@ onUnmounted(() => {
     }
   }
 
-  }
-
+}
 </style>
