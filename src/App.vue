@@ -20,7 +20,7 @@ onMounted(() => {
 function setSharedData() {
   if (window.Telegram && window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
-    data.value = JSON.stringify(initData)
+    alert(initData)
 
   } 
 }
