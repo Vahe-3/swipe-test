@@ -102,19 +102,33 @@ function _shareBtnClick() {
 }
 
 function setSharedData() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const sharedUserId = urlParams.get("sharedUserId");
-  const sharedUserName = urlParams.get("sharedUserName");
-  alert(urlParams, 'url')
-  if (sharedUserId && sharedUserName) {
-    const sharedUser = {
-      userId: sharedUserId,
-      title: sharedUserName
-    };
+  if (window.Telegram && window.Telegram.WebApp) {
+    const initData = window.Telegram.WebApp.initDataUnsafe;
 
-    alert(JSON.stringify(sharedUser))
+    if (initData && initData.start_param) {
+      alert("Start Param: " + initData.start_param);
+      
+      // Parse custom parameters if needed
+      const params = new URLSearchParams(initData.start_param);
+      const sharedUserId = params.get("sharedUserId");
+      const sharedUserName = params.get("sharedUserName");
+
+      if (sharedUserId && sharedUserName) {
+        const sharedUser = {
+          userId: sharedUserId,
+          title: sharedUserName
+        };
+
+        alert(JSON.stringify(sharedUser));
+      }
+    } else {
+      alert("No start_param found");
+    }
+  } else {
+    alert("Telegram WebApp not detected");
   }
 }
+
 
 
 // Listen for viewport changes to handle keyboard display adjustments
@@ -162,12 +176,12 @@ onUnmounted(() => {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: blue;
+  background-color: red;
   height: 80vh;
 
   .chatInput {
     border-bottom: 1px solid #fff;
-    background-color: blue;
+    background-color: red;
     position: fixed;
     z-index: 2017;
     width: 100%;
