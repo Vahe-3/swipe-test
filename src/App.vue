@@ -1,173 +1,30 @@
 <template>
-  <div class="container" @touchstart="closeKeyboard">
-    hello
-    <button style="display: block;" @click="_toggleFullScreen(!isFullScreenMode)">Change mode</button>
+  <div class="container" >
+    <h1> {{ data }}</h1>
 
   </div>
 
-  <button @click="_shareBtnClick">Share Links</button>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref, onBeforeMount } from 'vue';
 
-const chatFieldText = ref('');
-const isShowChat = ref(false);
-const marginBottom = ref(0);
-const initialViewportHeight = ref(window.Telegram.WebApp.viewportStableHeight);
-const lastViewportHeight = ref(initialViewportHeight.value);
-let viewportResizeTimeout = null;
-const chatField = ref(null); // Reference for the chat input field
-const chatField2 = ref(null)
-const screenY = ref(window.screenY); // Initialize screenY value
-
-const isFullScreenMode = ref(false);
-const fullscreenListener = ref(null)
-
-
+const data = ref('none')
 onMounted(() => {
   _toggleFullScreen(true);
   _setVH();
   setSharedData()
 })
 
-function adjustMarginForKeyboard() {
-  const currentHeight = window.Telegram.WebApp.viewportStableHeight;
-  const margin = initialViewportHeight.value - currentHeight;
-  marginBottom.value = margin > 0 ? margin : 0;
-}
-
-function isIphone() {
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-function _toggleFullScreen(value) {
-  if (window.Telegram.WebApp?.version > 6.0) {
-
-
-    isFullScreenMode.value = value;
-    if (value) {
-      window.Telegram.WebApp.requestFullscreen();
-      document.documentElement.classList.add('isFullScreen');
-    } else {
-      window.Telegram.WebApp.exitFullscreen();
-      document.documentElement.classList.remove('isFullScreen');
-    }
-  }
-}
-
-// Function to close the keyboard
-function closeKeyboard(event) {
-  if (event.target !== chatField.value?.$el) {
-    chatField2.value?.blur();
-    chatField.value?.blur(); // Blurs the input, closing the keyboard
-  }
-}
-
-function _setVH() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-function _shareBtnClick() {
-
-
-
-  const urlToShare = `https://t.me/feed_x_bot`;
-
-
-  const dataList = [
-    "@cdsdsvsd",
-    "Data item 2",
-    "Data item 3"
-  ];
-
-  // Format the data list into a single string.
-  // You can use any separator you prefer; here we use newline characters.
-  const listText = dataList.join('\n');
-
-  // Optionally, prepend a greeting or header.
-  const messageText = `${"Hello world!"}\n\n${listText}`;
-
-  // URL-encode both the URL and the text.
-  const encodedUrl = encodeURIComponent(urlToShare);
-  const encodedText = encodeURIComponent(messageText);
-
-  // Build the full Telegram share URL.
-  const shareLink = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
-
-  // Use Telegram WebApp's method to open the share link.
-  // Alternatively, you could simply set window.location.href = shareLink or open it in a new tab.
-  window.Telegram.WebApp.openTelegramLink(shareLink);
-}
 
 function setSharedData() {
   if (window.Telegram && window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
+    data.value = JSON.stringify(initData)
 
-    if (initData && initData.start_param) {
-      alert("Start Param: " + initData.start_param);
-      
-      // Parse custom parameters if needed
-      const params = new URLSearchParams(initData.start_param);
-      const sharedUserId = params.get("sharedUserId");
-      const sharedUserName = params.get("sharedUserName");
-
-      if (sharedUserId && sharedUserName) {
-        const sharedUser = {
-          userId: sharedUserId,
-          title: sharedUserName
-        };
-
-        alert(JSON.stringify(sharedUser));
-      }
-    } else {
-      alert("No start_param found");
-    }
-  } else {
-    alert("Telegram WebApp not detected");
-  }
+  } 
 }
 
-
-
-// Listen for viewport changes to handle keyboard display adjustments
-// onMounted(() => {
-//   // Existing viewport change listener
-//   window.Telegram.WebApp.onEvent('viewportChanged', ({ isStateStable }) => {
-//     if (!isStateStable || lastViewportHeight.value === window.Telegram.WebApp.viewportStableHeight) {
-//       return;
-//     }
-
-//     lastViewportHeight.value = window.Telegram.WebApp.viewportStableHeight;
-
-//     if (viewportResizeTimeout) {
-//       clearTimeout(viewportResizeTimeout);
-//     }
-
-//     viewportResizeTimeout = setTimeout(() => {
-//       if (isIphone()) {
-//         adjustMarginForKeyboard();
-//       }
-//     }, 800);
-//   });
-
-//   // Update screenY on scroll
-//   window.addEventListener('scroll', () => {
-//     screenY.value = window.scrollY;
-//   });
-
-//   setTimeout(() => {
-//     window.scrollTo(100, 100);
-//   }, 2000);
-// });
-
-// Clean up event listener when component is unmounted
-onUnmounted(() => {
-  window.removeEventListener('scroll', () => {
-    screenY.value = window.scrollY;
-  });
-});
 </script>
 
 <style scoped lang="less">
