@@ -18,9 +18,9 @@ onMounted(() => {
 
 
 function setSharedData() {
-  if (window.Telegram && window.Telegram.WebApp) {
+  if ( window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
-    alert(initData)
+    data.value = JSON.stringify(initData)
 
   } 
 }
