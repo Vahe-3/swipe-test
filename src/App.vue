@@ -11,21 +11,22 @@ import { onMounted, onUnmounted, ref, onBeforeMount } from 'vue';
 
 const data = ref('none')
 onMounted(() => {
-  _toggleFullScreen(true);
-  _setVH();
+
   setSharedData()
 })
 
 
 function setSharedData() {
-  if (window.Telegram.WebApp) {
+   alert("Telegram WebApp Started")
+  if (window.Telegram && window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
+    alert("Telegram WebApp initDataUnsafe:", initData);
 
     if (initData && initData.start_param) {
-      alert("Start Param: " + initData.start_param);
+      alert("Start Param:", initData.start_param);
       
-      // Parse custom parameters if needed
-      const params = new URLSearchParams(initData.start_param);
+      // Decode `start_param` if it contains multiple parameters
+      const params = new URLSearchParams(atob(initData.start_param));
       const sharedUserId = params.get("sharedUserId");
       const sharedUserName = params.get("sharedUserName");
 
@@ -35,15 +36,19 @@ function setSharedData() {
           title: sharedUserName
         };
 
+        alert("Extracted Shared User:", sharedUser);
         alert(JSON.stringify(sharedUser));
+      } else {
+        alert("No sharedUserId or sharedUserName found in start_param");
       }
     } else {
-      alert("No start_param found");
+      alert("No start_param found in Telegram WebApp data");
     }
   } else {
     alert("Telegram WebApp not detected");
   }
 }
+
 
 
 </script>
