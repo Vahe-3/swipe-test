@@ -18,12 +18,33 @@ onMounted(() => {
 
 
 function setSharedData() {
-  if ( window.Telegram.WebApp) {
+  if (window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
-    data.value = JSON.stringify(initData)
 
-  } 
+    if (initData && initData.start_param) {
+      alert("Start Param: " + initData.start_param);
+      
+      // Parse custom parameters if needed
+      const params = new URLSearchParams(initData.start_param);
+      const sharedUserId = params.get("sharedUserId");
+      const sharedUserName = params.get("sharedUserName");
+
+      if (sharedUserId && sharedUserName) {
+        const sharedUser = {
+          userId: sharedUserId,
+          title: sharedUserName
+        };
+
+        alert(JSON.stringify(sharedUser));
+      }
+    } else {
+      alert("No start_param found");
+    }
+  } else {
+    alert("Telegram WebApp not detected");
+  }
 }
+
 
 </script>
 
