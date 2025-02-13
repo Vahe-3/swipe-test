@@ -18,10 +18,30 @@ onMounted(() => {
 
 function getTelegramParams() {
   if (window.Telegram && window.Telegram.WebApp) {
-    let startParam = window.Telegram.WebApp.initDataUnsafe.start_param
-    alert(startParam);
+    const initData = window.Telegram.WebApp.initDataUnsafe;
+
+    if (initData && initData.start_param) {
+      console.log("Start Param:", initData.start_param);
+
+      // Manually extract sharedUserId and sharedUserName
+      const params = initData.start_param.split("_");
+      const sharedUserId = params[1];
+      const sharedUserName = params[3];
+
+      if (sharedUserId && sharedUserName) {
+        alert(`User ID: ${sharedUserId}, Name: ${sharedUserName}`);
+      } else {
+        alert("No valid sharedUserId or sharedUserName found in start_param.");
+      }
+    } else {
+      alert("No start_param found in Telegram WebApp data.");
+    }
+  } else {
+    alert("Telegram WebApp not detected.");
+  }
 }
-}
+
+// Call the funct
 
 
 
