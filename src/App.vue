@@ -42,8 +42,7 @@ function getTelegramParams() {
   }
 }
 
-// Call the function on page load
-getTelegramParams();
+// Call the funct
 
 
 
