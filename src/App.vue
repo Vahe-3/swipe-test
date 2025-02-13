@@ -105,7 +105,7 @@ function setSharedData() {
   const urlParams = new URLSearchParams(window.location.search);
   const sharedUserId = urlParams.get("sharedUserId");
   const sharedUserName = urlParams.get("sharedUserName");
-
+  alert(urlParams, 'url')
   if (sharedUserId && sharedUserName) {
     const sharedUser = {
       userId: sharedUserId,
