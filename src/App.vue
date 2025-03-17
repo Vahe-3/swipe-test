@@ -1,7 +1,8 @@
 <template>
-  <div class="container" >
+  <div class="container">
     <h1> {{ data }}</h1>
-
+    <custom-emoji-element class="custom-emoji media-sticker-wrapper" data-doc-id="5319238458324043162"
+      data-sticker-emoji="🍎"></custom-emoji-element>
   </div>
 
 </template>
@@ -19,29 +20,18 @@ onMounted(() => {
 function getTelegramParams() {
   if (window.Telegram && window.Telegram.WebApp) {
     const initData = window.Telegram.WebApp.initDataUnsafe;
-
     if (initData && initData.start_param) {
-      console.log("Start Param:", initData.start_param);
-
-      // Manually extract sharedUserId and sharedUserName
       const params = initData.start_param.split("_");
+
       const sharedUserId = params[1];
       const sharedUserName = params[3];
 
       if (sharedUserId && sharedUserName) {
         alert(`User ID: ${sharedUserId}, Name: ${sharedUserName}`);
-      } else {
-        alert("No valid sharedUserId or sharedUserName found in start_param.");
       }
-    } else {
-      alert("No start_param found in Telegram WebApp data.");
     }
-  } else {
-    alert("Telegram WebApp not detected.");
   }
 }
-
-// Call the funct
 
 
 
@@ -54,7 +44,7 @@ function getTelegramParams() {
 .container {
   padding-left: 20px;
   padding-right: 20px;
-  background-color: red;
+  background-color: skyblue;
   height: 80vh;
 
   .chatInput {
