@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <h1> {{ data }}</h1>
-    <custom-emoji-element class="custom-emoji media-sticker-wrapper" data-doc-id="5319238458324043162"
-      data-sticker-emoji="🍎"></custom-emoji-element>
+    <h1>Hello</h1>
+    <tg-emoji emoji="🎄"></tg-emoji>
+    <tg-emoji emoji="🎄🍪"></tg-emoji>
+    <div />
   </div>
-
 </template>
 
 <script setup>
