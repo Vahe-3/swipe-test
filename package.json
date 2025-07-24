@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@adsgram/vue": "^1.0.2",
     "less": "^4.2.0",
     "vant": "^4.9.8",
     "vue": "^3.4.29"
