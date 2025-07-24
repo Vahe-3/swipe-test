@@ -1,61 +1,82 @@
 <template>
   <div class="container">
-    <adsgram-task
-      class="task"
-      :data-block-id="'task-13058'"
-      :data-debug="true"
-      ref="taskRef"
-    >
-      <span slot="reward" class="task__reward">1000 монет</span>
-      <div slot="button" class="task__button">вперед</div>
-      <div slot="claim" class="task__button task__button--claim">получить</div>
-      <div slot="done" class="task__button task__button--done">готово</div>
-    </adsgram-task>
+    <van-cell-group inset>
+      <van-cell size="large" center>
+        <adsgram-task
+          class="task"
+          data-block-id="task-13058"
+          :data-debug="true"
+          ref="taskRef"
+        >
+          <span slot="reward" class="task__reward">1000 монет</span>
+          <div slot="button" class="task__button">Go</div>
+          <div slot="claim" class="task__button task__button--claim">
+            получить
+          </div>
+          <div slot="done" class="task__button task__button--done">готово</div>
+        </adsgram-task> </van-cell
+      >
+    </van-cell-group>
   </div>
 </template>
 
-<script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+<script>
+export default {
+  name: "Task",
+  data() {
+    return {
+      taskRef: null,
+    };
+  },
+  mounted() {
+    if (this.taskRef) {
+      this.taskRef.addEventListener("reward", this.onReward);
+    }
+  },
+  unmounted() {
+    if (this.taskRef) {
+      this.taskRef.removeEventListener("reward", this.onReward);
+    }
+  },
 
-const taskRef = ref(null);
+  methods: {
+    onReward(event) {
+      alert(`Награда, detail = ${event.detail}`);
+    },
+  },
 
-const handler = (event) => {
-  alert(`Награда, detail = ${event.detail}`);
+  computed: {
+    isTelegramEnvironment() {
+      return (
+        typeof window !== "undefined" &&
+        typeof window.Telegram !== "undefined" &&
+        typeof window.Telegram.WebApp !== "undefined" &&
+        !!window.Telegram.WebApp.initData
+      );
+    },
+  },
 };
-
-onMounted(() => {
-  if (taskRef.value) {
-    taskRef.value.addEventListener("reward", handler);
-  }
-});
-
-onBeforeUnmount(() => {
-  if (taskRef.value) {
-    taskRef.value.removeEventListener("reward", handler);
-  }
-});
 </script>
 
 <style scoped>
 .task {
-  --adsgram-task-font-size: 16px; /* минимум 14px */
-  --adsgram-task-icon-size: 50px; /* минимум 30px */
-  --adsgram-task-icon-title-gap: 15px; /* минимум 5px максимум 40px */
-  --adsgram-task-button-width: 60px; /* минимум 40px */
-  --adsgram-task-icon-border-radius: 8px;
+  --adsgram-task-font-size: 16px;
+  --adsgram-task-icon-size: 55px;
+  --adsgram-task-icon-title-gap: 15px;
+  --adsgram-task-button-width: 60px;
+  --adsgram-task-icon-border-radius: 100px;
 
   display: block;
   width: 100%;
-  padding: 8px 16px 8px 8px;
   border-radius: 16px;
-  background-color: #1d2733;
-  font-family: Roboto;
   color: white;
 }
 
 .task__reward {
   margin: 5px 0 0 0;
-  font-size: 14px;
+  font-size: 16px;
+  color: var(--van-cell-label-color);
+  display: flex;
 }
 
 .task__button {
@@ -65,13 +86,11 @@ onBeforeUnmount(() => {
   padding: 6px 12px;
 }
 
-.task__button_claim {
-  margin-left: 0;
+.task__button--claim {
   background-color: #ee941c;
 }
 
-.task__button_done {
-  margin-left: 0;
+.task__button--done {
   background-color: #007539;
 }
 </style>
