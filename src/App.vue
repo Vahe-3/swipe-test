@@ -1,24 +1,21 @@
 <template>
-  <adsgram-task
-    class="task"
-    :data-block-id="blockId"
-    :data-debug="debug"
-    ref="taskRef"
-  >
-    <span slot="reward" class="task__reward">1000 монет</span>
-    <div slot="button" class="task__button">вперед</div>
-    <div slot="claim" class="task__button task__button--claim">получить</div>
-    <div slot="done" class="task__button task__button--done">готово</div>
-  </adsgram-task>
+  <div class="container">
+    <adsgram-task
+      class="task"
+      :data-block-id="'task-13058'"
+      :data-debug="true"
+      ref="taskRef"
+    >
+      <span slot="reward" class="task__reward">1000 монет</span>
+      <div slot="button" class="task__button">вперед</div>
+      <div slot="claim" class="task__button task__button--claim">получить</div>
+      <div slot="done" class="task__button task__button--done">готово</div>
+    </adsgram-task>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue';
-
-const props = defineProps({
-  debug: { type: Boolean, default: false },
-  blockId: { type: String, required: true }
-});
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const taskRef = ref(null);
 
@@ -28,13 +25,13 @@ const handler = (event) => {
 
 onMounted(() => {
   if (taskRef.value) {
-    taskRef.value.addEventListener('reward', handler);
+    taskRef.value.addEventListener("reward", handler);
   }
 });
 
 onBeforeUnmount(() => {
   if (taskRef.value) {
-    taskRef.value.removeEventListener('reward', handler);
+    taskRef.value.removeEventListener("reward", handler);
   }
 });
 </script>
@@ -48,7 +45,7 @@ onBeforeUnmount(() => {
   --adsgram-task-icon-border-radius: 8px;
 
   display: block;
-  width: 328px;
+  width: 100%;
   padding: 8px 16px 8px 8px;
   border-radius: 16px;
   background-color: #1d2733;
@@ -62,7 +59,7 @@ onBeforeUnmount(() => {
 }
 
 .task__button {
-  margin-left: 10px;
+  width: fit-content;
   background-color: #50a8eb;
   border-radius: 5px;
   padding: 6px 12px;
