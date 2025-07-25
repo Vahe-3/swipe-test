@@ -42,3 +42,8 @@ h3 {
   }
 }
 </style>
+  --adsgram-task-font-size: 16px;
+  --adsgram-task-icon-size: 55px;
+  --adsgram-task-icon-title-gap: 15px;
+  --adsgram-task-button-width: 60px;
+  --adsgram-task-icon-border-radius: 100px;

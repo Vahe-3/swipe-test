@@ -1,22 +1,18 @@
 <template>
   <div class="container">
-    <van-cell-group inset>
-      <van-cell size="large" center>
-        <adsgram-task
-          class="task"
-          data-block-id="task-13058"
-          :data-debug="true"
-          ref="taskRef"
-        >
-          <span slot="reward" class="task__reward">1000 монет</span>
-          <div slot="button" class="task__button">Go</div>
-          <div slot="claim" class="task__button task__button--claim">
-            получить
-          </div>
-          <div slot="done" class="task__button task__button--done">готово</div>
-        </adsgram-task> </van-cell
-      >
-    </van-cell-group>
+    <adsgram-task
+      class="adsGramQuest"
+      data-block-id="task-13058"
+      :data-debug="true"
+      ref="taskRef"
+    >
+      <span slot="reward" class="questReward">+3,000 CRUMBS</span>
+      <div slot="button" class="adsGramButton"><van-icon name="arrow" /></div>
+      <div slot="claim" class="adsGramButton adsGramButton--claim">
+        получить
+      </div>
+      <div slot="done" class="adsGramButton adsGramButton--done">готово</div>
+    </adsgram-task>
   </div>
 </template>
 
@@ -29,68 +25,62 @@ export default {
     };
   },
   mounted() {
+    const isTelegram =
+      typeof window !== "undefined" &&
+      typeof window.Telegram !== "undefined" &&
+      typeof window.Telegram.WebApp !== "undefined" &&
+      !!window.Telegram.WebApp.initData;
+
+    console.log({ isTelegram });
+
     if (this.taskRef) {
       this.taskRef.addEventListener("reward", this.onReward);
     }
   },
-  unmounted() {
+  beforeUnmount() {
     if (this.taskRef) {
       this.taskRef.removeEventListener("reward", this.onReward);
     }
   },
-
   methods: {
     onReward(event) {
-      alert(`Награда, detail = ${event.detail}`);
-    },
-  },
-
-  computed: {
-    isTelegramEnvironment() {
-      return (
-        typeof window !== "undefined" &&
-        typeof window.Telegram !== "undefined" &&
-        typeof window.Telegram.WebApp !== "undefined" &&
-        !!window.Telegram.WebApp.initData
-      );
+      console.log(`Награда, detail = ${event.detail}`);
     },
   },
 };
 </script>
 
 <style scoped>
-.task {
-  --adsgram-task-font-size: 16px;
+.adsGramQuest {
+  --adsgram-task-font-size: var(--van-cell-large-title-font-size);
   --adsgram-task-icon-size: 55px;
   --adsgram-task-icon-title-gap: 15px;
-  --adsgram-task-button-width: 60px;
   --adsgram-task-icon-border-radius: 100px;
 
   display: block;
   width: 100%;
+  padding: 12px 16px 12px 16px;
   border-radius: 16px;
+  background-color: var(--van-cell-background);
   color: white;
 }
 
-.task__reward {
-  margin: 5px 0 0 0;
-  font-size: 16px;
+.questReward {
+  margin-top: 4px;
+  font-size: var(--van-cell-large-label-font-size);
   color: var(--van-cell-label-color);
+}
+
+.adsGramButton {
   display: flex;
+  justify-content: end;
 }
 
-.task__button {
-  width: fit-content;
-  background-color: #50a8eb;
-  border-radius: 5px;
-  padding: 6px 12px;
-}
-
-.task__button--claim {
+.adsGramButton--claim {
   background-color: #ee941c;
 }
 
-.task__button--done {
+.adsGramButton--done {
   background-color: #007539;
 }
 </style>
