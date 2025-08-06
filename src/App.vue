@@ -3,6 +3,7 @@
     <adsgram-task
       class="adsGramQuest"
       data-block-id="task-13058"
+      data-debug="true"
       ref="taskRef"
     >
       <span slot="reward" class="questReward">+3,000 CRUMBS</span>
