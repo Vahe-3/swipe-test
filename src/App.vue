@@ -44,7 +44,7 @@ export default {
   methods: {
     onReward(event) {
       console.log(`🏆 Reward received: ${event.detail}`);
-      console.log(`Event: ${event}`);
+      console.log({event});
     },
     onError(event) {
       console.error("❌ Error in AdsGramTask:", event.detail || event);
