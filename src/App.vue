@@ -3,7 +3,6 @@
     <adsgram-task
       class="adsGramQuest"
       data-block-id="task-13058"
-      :data-debug="true"
       ref="taskRef"
     >
       <span slot="reward" class="questReward">+3,000 CRUMBS</span>
@@ -18,37 +17,47 @@
 
 <script>
 export default {
-  name: "Task",
+  name: "AdsGramTask",
   data() {
     return {
       taskRef: null,
     };
   },
   mounted() {
-    const isTelegram =
-      typeof window !== "undefined" &&
-      typeof window.Telegram !== "undefined" &&
-      typeof window.Telegram.WebApp !== "undefined" &&
-      !!window.Telegram.WebApp.initData;
-
-    console.log({ isTelegram });
-
+    this.taskRef = this.$refs.taskRef;
     if (this.taskRef) {
       this.taskRef.addEventListener("reward", this.onReward);
+      this.taskRef.addEventListener("onError", this.onError);
+      this.taskRef.addEventListener("onBannerNotFound", this.onBannerNotFound);
+      this.taskRef.addEventListener("onTooLongSession", this.onTooLongSession);
     }
   },
-  beforeUnmount() {
+  unmounted() {
     if (this.taskRef) {
       this.taskRef.removeEventListener("reward", this.onReward);
+      this.taskRef.removeEventListener("onError", this.onError);
+      this.taskRef.removeEventListener("onBannerNotFound", this.onBannerNotFound);
+      this.taskRef.removeEventListener("onTooLongSession", this.onTooLongSession);
     }
   },
   methods: {
     onReward(event) {
-      console.log(`Награда, detail = ${event.detail}`);
+      console.log(`🏆 Reward received: ${event.detail}`);
+    },
+    onError(event) {
+      console.error("❌ Error in AdsGramTask:", event.detail || event);
+    },
+    onBannerNotFound(event) {
+      console.warn("⚠️ Banner not found:", event.detail || event);
+    },
+    onTooLongSession(event) {
+      console.warn("⏳ Too long session:", event.detail || event);
+      alert("Сессия слишком длинная. Пожалуйста, перезапустите приложение.");
     },
   },
 };
 </script>
+
 
 <style scoped>
 .adsGramQuest {
@@ -60,7 +69,7 @@ export default {
   display: block;
   width: 100%;
   padding: 12px 16px 12px 16px;
-  border-radius: 16px;
+  border-radius: 10px;
   background-color: var(--van-cell-background);
   color: white;
 }
