@@ -1,5 +1,6 @@
 <template>
   <div class="container" v-if="isVisible">
+    hello
     <adsgram-task class="adsGramQuest" data-block-id="task-13058" ref="taskRef">
       <span slot="reward" class="questReward">+3,000 CRUMBS</span>
       <div slot="button" class="adsGramButton"><van-icon name="arrow" /></div>
@@ -14,26 +15,26 @@ export default {
   name: "AdsGramTask",
   data() {
     return {
-      taskRef: null,
       isVisible: true,
     };
   },
   mounted() {
-    this.taskRef = this.$refs.taskRef;
-    if (!this.taskRef) return;
+    const task = this.$refs.taskRef;
+    if (!task) return;
 
     // Все требуемые события
-    this.taskRef.addEventListener("reward", this.onReward);
-    this.taskRef.addEventListener("onError", this.onError);
-    this.taskRef.addEventListener("onBannerNotFound", this.onBannerNotFound);
-    this.taskRef.addEventListener("onTooLongSession", this.onTooLongSession);
+    task.addEventListener("reward", this.onReward);
+    task.addEventListener("onError", this.onError);
+    task.addEventListener("onBannerNotFound", this.onBannerNotFound);
+    task.addEventListener("onTooLongSession", this.onTooLongSession);
   },
   unmounted() {
-    if (!this.taskRef) return;
-    this.taskRef.removeEventListener("reward", this.onReward);
-    this.taskRef.removeEventListener("onError", this.onError);
-    this.taskRef.removeEventListener("onBannerNotFound", this.onBannerNotFound);
-    this.taskRef.removeEventListener("onTooLongSession", this.onTooLongSession);
+    const task = this.$refs.taskRef;
+    if (!task) return;
+    task.removeEventListener("reward", this.onReward);
+    task.removeEventListener("onError", this.onError);
+    task.removeEventListener("onBannerNotFound", this.onBannerNotFound);
+    task.removeEventListener("onTooLongSession", this.onTooLongSession);
   },
   methods: {
     // user completed the task
