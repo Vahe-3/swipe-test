@@ -1,6 +1,6 @@
 <template>
   <div class="container" v-if="isVisible">
-    <adsgram-task class="adsGramQuest" data-block-id="task-13058" data-debug="true" ref="taskRef">
+    <adsgram-task class="adsGramQuest" data-block-id="task-13058" ref="taskRef">
       <span slot="reward" class="questReward">+3,000 CRUMBS</span>
       <div slot="button" class="adsGramButton"><van-icon name="arrow" /></div>
       <div slot="claim" class="adsGramButton adsGramButton--claim">получить</div>
